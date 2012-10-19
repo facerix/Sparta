@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--link rel="stylesheet" href="/code/css/login.css" type="text/css" charset="utf-8" /-->
+        <style>
+            /*
+            powderBlue / steelBlue
+            #AAE / #C0C0F0 / #9090D0
+            */
+
+            form {
+                background-color: #AAE;
+                border: 2px dashed steelBlue;
+                border-radius: 3px;
+                -webkit-box-shadow: 0 0 0 4px #9090D0, 2px 1px 6px 4px rgba(10,10,0,.5);
+                   -moz-box-shadow: 0 0 0 4px #9090D0, 2px 1px 6px 4px rgba(10,10,0,.5);
+                        box-shadow: 0 0 0 4px #9090D0, 2px 1px 6px 4px rgba(10,10,0,.5);
+                        /*0 15px 10px rgba(0, 0, 0, 0.7)*/
+
+                padding: 10px 40px;
+                width: 320px;
+
+                position: absolute;
+                top: 50%; left: 50%;
+                margin: -160px 0 0 -200px;
+            }
+
+            form h1 {
+                color: #F0F0FF;
+                text-align: center;
+                text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            }
+
+            form input, button {
+                width: 100%;
+                height: 2em;
+                line-height: 2em;
+                font-size: 1.5em;
+                padding: 0; margin: 0;
+                display: block;
+            }
+
+            .warning {
+                border-bottom: 2px groove #9090D0;
+                color: #FF381A;
+                font: 1.1em bold;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="login.php" method="POST">
+            <h1>Sign on</h1>
+
+            {% if data.message != '' %}
+            <p class="warning">{{ data.message }}</p>
+            {% endif %}
+
+            <input type="text" name="username" placeholder="(Username)"></input>
+            <input type="password" name="password" placeholder="(Password)"></input>
+            <input type="submit" value="Let me in!"/>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'panel-base.html' %}
+
+{% block pagetitle %}Manage pages{% endblock %}
+
+{% block code %}
+var n, items = document.querySelectorAll('.item[data-href]');
+for (n=0; n < items.length; n++) {
+    items[n] && atto.on(items[n], 'click', function() { location.href = this.getAttribute('data-href'); });
+}
+{% endblock %}
+
+{% block main %}
+    <h1>Pages</h1>
+    <ol>
+    {% for index,page in data.pages %}
+    <div class="item {%if page.draft %}draft{% endif %}" data-href="{{ data.blog.url }}/edit_page.php?name={{ page.name | escape true }}">
+        <span class='title'>{{ page.name }}</span>
+        <span class='date'>{%if page.draft %}{% else %}{{ page.pubDate }}{% endif %}</span>
+        <a class='view' href="{{ data.blog.url }}/page/{{ page.name }}" title="View this page">&rsaquo;</a>
+    </div>
+    {% endfor %}
+    </ol>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'panel-base.html' %}
+
+{% block pagetitle %}{{ data.title }}{% endblock %}
+
+{% block code %}
+require(
+    ["atto/core"],
+    function(atto) {
+    "use strict";
+
+        var txt = document.querySelector('textarea');
+        function reflow() {
+            txt.style.height = window.innerHeight - 176 + 'px';
+        }
+        atto.addEvent(window, 'resize', reflow);
+        atto.addEvent(window, 'load', reflow);
+
+        function publish() {
+            var draft = document.getElementById('blnDraft').value;
+            var action = draft ? 'Published' : 'Saved';
+
+            atto.xhrRequest({
+                form: dojo.byId("frmEdit"),
+                handleAs: "text",
+                load: function(data) {
+                    dojo.byId("xhrResponse").innerHTML = action + " at " + new Date();
+                },
+                error: function(error) {
+                    dojo.byId("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                }
+            });
+        }
+
+        atto.addEvent(document.querySelector('.submit'), 'click', publish);
+
+    } // end of require callback
+);
+
+
+
+
+{% endblock %}
+
+{% block main %}
+<style>
+    input[type='text'], .status {
+        display: block;
+        padding: 2px 4px; margin:0;
+        width:100%;
+    }
+    #frmEdit textarea {
+        position: absolute;
+        left: 0; right: 0;
+        width: 100%;
+        top: 96px;
+        bottom: 76px;
+    }
+    #frmEdit footer {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 76px;
+    }
+
+    #frmEdit .status span {
+        display: inline-block;
+        left: 0; right: 24px;
+    }
+    #frmEdit .submit {
+        color: #CC6;
+        position: absolute;
+        right: 5px;
+        width: 45px;
+    }
+
+</style>
+    <form id="frmEdit" action="savePost.php" method="POST">
+        <input type="text" name="title" value="{{ data.post.title }}" placeholder="Post Title"> </input>
+        <input type="text" name="seoName" value="{{ data.post.seoName }}" placeholder="SEO-name (i.e. URL-friendly name)"> </input>
+        <textarea name="content" class='clearfix' rows="16" placeholder="Post Body Goes Here">{{ data.post.body }}</textarea>
+
+        <footer>
+            <input type="text" name="tags" value="{{ data.tags }}" placeholder="Tags"> </input>
+            <div class="status">
+                <input type="checkbox" id="blnDraft" name="draft" {% if data.post.draft %}checked="checked"{% endif %} />
+                <label for="draft">Draft</label>
+                <span id="xhrResponse"> </span>
+                <a href="#" class="icon-lightning submit"> </a>
+            </div>
+        </footer>
+
+        <input type="hidden" name="secret" value="booya"/>
+        <input type="hidden" id="guid"     name="guid"    value="{{ data.post.guid }}"  />
+        <input type="hidden" id="pubDate"  name="pubDate" value="{{ data.currDate }}"   />
+    </form>
+{% endblock %}

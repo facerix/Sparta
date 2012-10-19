@@ -1,0 +1,26 @@
+{% extends 'panel-base.html' %}
+
+{% block main %}
+    <nav class="main">
+      <div class="row">
+        <a href="{{ data.blog.url }}/edit" id="newPost">
+            <div class='link_glyph icon-pencil'></div>
+            <div class='link_label'>New Post</div>
+        </a>
+        <a href="{{ data.blog.url }}/edit_page" id="newPage">
+            <div class='link_glyph icon-paper'></div>
+            <div class='link_label'>New Page</div>
+        </a>
+      </div>
+      <div class="row">
+        <a href="{{ data.blog.url }}/posts" id="allPosts">
+            <div class='link_glyph icon-newspaper'></div>
+            <div class='link_label'>View Posts</div>
+        </a>
+        <a href="{{ data.blog.url }}/pages" id="allPages">
+            <div class='link_glyph icon-copy'></div>
+            <div class='link_label'>View Pages</div>
+        </a>
+      </div>
+    </nav>
+{% endblock %}

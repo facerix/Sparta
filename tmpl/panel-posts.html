@@ -1,0 +1,37 @@
+{% extends 'panel-base.html' %}
+
+{% block pagetitle %}Manage posts{% endblock %}
+
+{% block code %}
+var n, items = document.querySelectorAll('.item[data-href]');
+for (n=0; n < items.length; n++) {
+    items[n] && on(items[n], 'click', function(event) { 
+        if (this === window) {
+            // I hate you, IE.
+            var target = event ? event.target : window.event.srcElement; 
+            console.log(target);
+        } else {
+            console.log(typeof this);
+            window.location.href = this.getAttribute('data-href');
+        }
+    });
+}
+{% endblock %}
+
+{% block main %}
+    <h1>Posts</h1>
+    <ol>
+    {% for index,post in data.posts %}
+    <div class="item {%if post.draft %}draft{% endif %}" data-href="{{ data.blog.url }}/edit.php?id={{ post.guid }}">
+        <span class='title'>{{ post.title }}</span>
+        <span class='tags'>{{ post.tags }}</span>
+        <span class='date'>{%if post.draft %}{% else %}{{ post.pubDate }}{% endif %}</span>
+        {% if post.seoName %}
+            <a class='view' href="{{ data.blog.url }}/post/{{ post.seoName }}" title="View this page">&rsaquo;</a>
+        {% else %}
+            <a class='view' href="{{ data.blog.url }}/?id={{ post.guid }}" title="View this page">&rsaquo;</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    </ol>
+{% endblock %}

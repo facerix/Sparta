@@ -161,3 +161,11 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+
+#############
+## Sparta Configs
+#############
+
+alibaba_config.php
+sparta_config.php

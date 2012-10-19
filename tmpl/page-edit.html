@@ -1,0 +1,74 @@
+{% extends 'panel-base.html' %}
+
+{% block pagetitle %}{{ data.title }}{% endblock %}
+
+{% block code %}
+"use strict";
+
+var txt = document.querySelector('textarea'),
+    footer = document.querySelector('footer'),
+    btnUnmax = document.querySelector('#btn_unmax');
+function reflow() {
+    if (txt.className == 'focused') {
+        txt.style.height = window.innerHeight + 'px';
+    } else {
+        txt.style.height = window.innerHeight - 124 + 'px';
+    }
+}
+function max_text() {
+    txt.className = 'focused';
+    btnUnmax.style.display = '';
+    footer.style.display = 'none';
+    reflow();
+}
+function unmax_text() {
+    txt.className = '';
+    btnUnmax.style.display = 'none';
+    footer.style.display = '';
+    reflow();
+}
+atto.on(window, 'resize', reflow);
+atto.on(window, 'load', reflow);
+atto.on(txt, 'focus', max_text);
+atto.on(txt, 'blur', unmax_text);
+
+function publish() {
+    var theForm = document.getElementById('frmEdit');
+
+    atto.xhrRequest({
+        url: theForm.action,
+        postData: atto.formToObject(theForm),
+        success: function(data) {
+            document.getElementById("xhrResponse").innerHTML = "Saved at " + new Date();
+        },
+        failure: function(error) {
+            document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+        }
+    });
+}
+atto.on(document.querySelector('.submit'), 'click', publish);
+{% endblock %}
+
+{% block main %}
+<style>
+  #frmEdit textarea { top: 74px; }
+</style>
+    <form id="frmEdit" action="savePage.php" method="POST">
+        <input type="text" name="title" value="{{ data.page.name }}" placeholder="Page Name"> </input>
+        <textarea name="content" rows="20" placeholder="Page Content Goes Here">{{ data.page.body }}</textarea>
+      <a id="btn_unmax" onclick="unmax_text" class="icon-reply" style="display:none;"> </a>
+
+        <footer>
+            <div class="status">
+                <input name="standalone" type="checkbox" id="chkStandalone" {%if data.page.standalone %}checked="checked"{% endif %}></input>
+                <label for="chkStandalone">Standalone</label>
+                <span id="xhrResponse"> </span>
+                <a href="#" class="icon-lightning submit"> </a>
+            </div>
+        </footer>
+
+        <input type="hidden" name="secret" value="booya"/>
+        <input type="hidden" id="guid"     name="guid"    value="{{ data.post.guid }}"  />
+        <input type="hidden" id="pubDate"  name="pubDate" value="{{ data.currDate }}"   />
+    </form>
+{% endblock %}

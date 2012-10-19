@@ -1,0 +1,265 @@
+* {
+       -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-user-select: none;
+}
+body {
+    background-color: #eee;
+    margin: 0; padding: 0;
+}
+header {
+    height: 45px;
+    background-color: #d0d0d0;
+    color: white;
+    text-shadow: 2px 3px 3px #777;
+
+    text-align: left;
+    padding: 0 0 0 10px;
+    font: 32px/45px 'OstrichSansBlack', Arial, sans-serif;
+
+    background-image: linear-gradient(top, #EEEEEE 0%, #AAAAAA 95%, #666666 100%);
+    background-image: -o-linear-gradient(top, #EEEEEE 0%, #AAAAAA 95%, #666666 100%);
+    background-image: -moz-linear-gradient(top, #EEEEEE 0%, #AAAAAA 95%, #666666 100%);
+    background-image: -webkit-linear-gradient(top, #EEEEEE 0%, #AAAAAA 95%, #666666 100%);
+    background-image: -ms-linear-gradient(top, #EEEEEE 0%, #AAAAAA 95%, #666666 100%);
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #EEEEEE),
+        color-stop(0.95, #AAAAAA),
+        color-stop(1, #666666)
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#666666',GradientType=0 ); /* IE6-8 */
+}
+a[class^='icon-'] {
+    color: white;
+    width: 2em;
+    font-size: 32px;
+    line-height: 45px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 2px 3px 3px #777;
+}
+.align-right {
+    float: right;
+}
+.main {
+    margin: 0 auto;
+    text-align: center;
+}
+nav {
+    margin: 0 auto;
+
+    position: inherit;
+    height: 100%; width: 100%;
+    letter-spacing: 0;
+    font-size: 1.2em;
+    padding: 4px 0 0 4px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+nav .row { display: block; }
+nav a {
+    display: inline-block;
+    width: 35%; height: 240px;
+
+    margin: 4px; padding: 0;
+
+    background-color: #666;
+    box-shadow: 0 0 0 1px #eee inset, 0 0 0 1px #666;
+    color: white;
+
+    font-family: 'Myriad-Pro', 'Myriad', helvetica, arial, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 2px 3px 3px #292929;
+}
+#newPage, #allPosts {
+       -moz-border-radius: 24px 0 24px 0;
+    -webkit-border-radius: 24px 0 24px 0;
+            border-radius: 24px 0 24px 0;
+}
+#newPost, #allPages {
+       -moz-border-radius: 0 24px 0 24px;
+    -webkit-border-radius: 0 24px 0 24px;
+            border-radius: 0 24px 0 24px;
+}
+
+.link_glyph {
+    font-size: 6em;
+    line-height: 180px;
+}
+.link_label {
+    font-family: 'OstrichSansBlack', Arial, sans-serif;
+    font-size: 1.5em;
+
+       -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+            transition: all .3s;
+}
+
+a:hover {
+    color: #333;
+    text-shadow: 2px 3px 3px #ddd;
+}
+
+
+h1 {
+    margin: 0; padding: 0 1em;
+    font: 24px/32px 'OstrichSansBlack', Arial, sans-serif;
+    border-bottom: 1px inset #AAA;
+    color: #AAA;
+}
+ol { list-style: none; margin: 0; padding: 0; }
+.item {
+    height: 50px;
+    background-color: white;
+    display: block;
+    padding: 1px 5px;
+    border-bottom: 1px solid rgba(102, 102, 102,0.1);
+}
+
+.item {
+    position: relative;
+    font: 16px/18px sans-serif;
+    margin-bottom: 1px;
+    color: #194048;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    display: list-item;
+    text-decoration: none;
+
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: #EEEEEE;
+}
+
+.item .view {
+    position: absolute;
+    top: 0; right: 0.3em;
+    content: "\203A";
+    text-decoration: none;
+    color: #aaa;
+    font: 32px/44px 'OstrichSansBlack', Arial, sans-serif;
+}
+.item .view:hover { color: white; }
+
+.item .title {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 95%;
+    white-space: nowrap;
+}
+
+.item .tags {
+    visibility: hidden;
+    color: #aaa;
+    position: absolute;
+    max-width: 60%;
+    right: 3em; bottom: 0.2em;
+    text-align: right;
+    text-overflow: ellipsis;
+}
+
+.item .date {
+    position: absolute;
+    left: 1em; bottom: 0.2em;
+}
+
+.item.draft:before {
+    content: "/ / / DRAFT / / / DRAFT / / / DRAFT / / / DRAFT ";
+    color: rgba(102, 102, 102,0.1);
+    font: 48px/50px 'OstrichSansBlack', Arial, sans-serif;
+    font-style: italic;
+
+    position: absolute;
+    left: 0.2em; right: 0.2em;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+/* page/post edit page styles */
+input[type='text'], .status {
+    display: block;
+    padding: 2px 4px; margin:0;
+    width:100%;
+}
+#btn_unmax {
+    position: absolute;
+    top: 0; right: 10px;
+    color: #CC6;
+
+    outline: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);  
+}
+
+#frmEdit textarea {
+    position: absolute;
+    left: 0; right: 0;
+    width: 100%;
+    top: 96px;
+    bottom: 76px;
+}
+#frmEdit textarea.focused {
+    top: 0; bottom: 0;
+    height: 100%;
+}
+
+#frmEdit footer {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 52px;
+}
+
+#frmEdit .status span {
+    display: inline-block;
+    left: 0; right: 24px;
+}
+#frmEdit .submit {
+    color: #CC6;
+    position: absolute;
+    right: 5px;
+    width: 45px;
+}
+
+
+
+/* media queries for mobile support */
+@media screen and (max-width: 320px) {
+    nav a { width: 120px; height: 120px; }
+
+    .link_glyph { font-size: 3em; line-height: 80px; }
+    .link_label { font-size: 1em; }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) and (orientation: landscape) {
+    nav a { width: 100px; height: 100px; }
+    nav .row { display: inline; }
+
+    .link_glyph { font-size: 2em; line-height: 60px; }
+    .link_label { font-size: 1em; }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) and (orientation: portrait) {
+    nav a { width: 140px; height: 140px; }
+
+    .link_glyph { font-size: 3em; line-height: 90px; }
+    .link_label { font-size: 1.2em; }
+}
+
+@media screen and (min-width: 480px) {
+    .item .tags {
+        visibility: inherit;
+    }
+}
