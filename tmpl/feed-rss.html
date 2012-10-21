@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+
+<channel>
+    <title>{{ data.blog.title }}</title>
+    <description>{{ data.blog.description }}</description>
+    <link>{{ data.blog.url }}</link>
+    <lastBuildDate>{{ data.lastUpdate }}</lastBuildDate>
+    <pubDate>{{ data.lastUpdate }}</pubDate>
+    <atom:link href="{{ data.blog.url }}/feed.php?format=rss" rel="self" type="application/rss+xml" />
+
+{% if data.posts %}
+    <!-- start looping over posts -->
+    {% for index, post in data.posts %}
+        <item>
+            <title>{{ post.title }}</title>
+            <description>{{ post.body }}</description>
+            <link>{{ data.blog.url }}/?id={{ post.guid }}</link>
+            <guid isPermaLink="false">{{ data.blog.url }}:{{ data.blog.category }}:{{ post.guid }}</guid>
+            <pubDate>{{ post.rssDate }}</pubDate>
+        </item>
+    {% endfor %}
+    <!-- end looping over posts -->
+  {% endif %}
+
+
+</channel>
+</rss>

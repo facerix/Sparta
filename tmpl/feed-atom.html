@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'>
+<id>tag:buyog.com,2010:blog-1.archive</id>
+<updated>{{ data.lastUpdate }}</updated>
+<title type='text'>{{ data.blog.title }}</title>
+<link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='{{ data.blog.author }}/feed.php'/>
+<link rel='self' type='application/atom+xml' href='{{ data.blog.url}}/feed.php'/>
+<link rel='alternate' type='text/html' href='{{ data.blog.url }}'/>
+<author>
+    <name>{{ data.blog.author }}</name>
+</author>
+<generator version='1.00' uri='http://buyog.com/tinyblog'>Tinyblog</generator>
+
+{% if data.posts %}
+    <!-- start looping over posts -->
+    {% for index, post in data.posts %}
+        <entry>
+            <id>tag:buyog.com,2010:blog-1.post-{{ post.guid }}</id>
+            <published>{{ post.isoDate }}</published>
+            <updated>{{ post.isoDate }}</updated>
+
+            {% if post.tags %}
+                {% for index,tag in post.tags %}
+                    <category scheme='http://buyog.com/code/tags' term='{{tag}}'/>
+                {% endfor %}
+            {% endif %}
+
+            <title type='text'>{{ post.title }}</title>
+            <content type='html'>{{ post.body }}</content>
+            <link rel='alternate' type='text/html' href='{{ data.blog.url }}/?id={{ post.guid }}' title='{{ post.title }}'/>
+            <author><name>{{ post.author }}</name></author>
+        </entry>
+    {% endfor %}
+    <!-- end looping over posts -->
+  {% endif %}
+</feed>
