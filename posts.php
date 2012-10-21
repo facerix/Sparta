@@ -19,7 +19,7 @@ $query = "SELECT guid, title, pubDate, author, draft, seoName " .
      "ORDER BY pubDate DESC LIMIT 50";
 
 # get result
-include('db_fetch.php');
+$result=mysql_query($query) or die("Unable to retrieve selected post(s)");
 
 $posts = array();
 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {

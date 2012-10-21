@@ -14,7 +14,6 @@ Alibaba::forceAuthentication();
 
 
 # get all pages
-$pages = array();
 $query = "SELECT name, pubDate, author, draft, standalone " .
      "FROM pages " .
      "ORDER BY name ASC LIMIT 50";
@@ -22,6 +21,7 @@ $query = "SELECT name, pubDate, author, draft, standalone " .
 # get result
 $result=mysql_query($query) or die("Unable to retrieve page listing");
 
+$pages = array();
 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     # reformat date
     $dateStamp = strtotime( $row['pubDate'] );

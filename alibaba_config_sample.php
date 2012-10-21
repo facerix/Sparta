@@ -5,7 +5,7 @@
 
 $APP_NAME = "Spartablog";
 
-$DATABASE_NAME = "spartanblog";
+$DATABASE_NAME = "sparta_demo";
 $DATABASE_HOST = "mysql.sparta.com";
 $DATABASE_USERNAME = "sparta_inserts";
 $DATABASE_PASSWORD = "$p@rta!";
