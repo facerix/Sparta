@@ -1,0 +1,63 @@
+{% extends 'blog-base.html' %}
+
+{% block title %}{{ data.post.title }} | {% endblock %}
+
+{% block content %}
+
+  <!-- Begin .post -->
+  <div class="post" id="post_{{ data.post.guid }}"></a>
+
+    <h3 class="post-title">
+     <a href="{{ data.blog.url }}/?id={{ data.post.guid }}" title="permanent link to this post">
+       {{ data.post.title }}
+     </a>
+    </h3>
+
+    <h2 class="date-header">{{ data.post.pubDate }}</h2>
+
+    <div class="post-body">
+        {{ data.post.body | safe }}
+    </div>
+
+    <div class="post-tags">
+        <strong>Tags:</strong>
+        {% for index,tag in data.tags %}
+            <a href="{{ data.blog.url }}/search.php?tag={{tag}}">{{ tag }}</a>{% if index < data.tags.length-1 %},{% endif %}
+        {% endfor %}
+    </div>
+
+    <p class="post-footer">
+        <em>Posted by {{ data.post.author }} @ {{ data.post.pubTime }}</em> &nbsp;
+        <!--a class="comment-link" href="{{ data.blog.url }}/?id={{ data.post.guid }}#comments"><span style="text-transform:lowercase">{{ data.post.comments }} comments</span></a-->
+    </p>
+
+  </div>
+  <!-- End .post -->
+
+<!-- end post details -->
+
+<div id="comments">
+  <h3><a name="comments">Comments:</a></h3>
+
+  {% if data.comments.length == 0 %}
+    <p>Comments are currently disabled.</p>
+  {% endif %}
+
+  <ul>
+{% for index, comment in data.comments %}
+    <li class="comment-body">
+      <p>At {{ comment.addDate }},
+
+      {% if comment.site %}
+        <a href="{{ comment.site }}">{{ comment.name }}</a>
+      {% else %}
+        <a href="{{ comment.email }}">{{ comment.name }}</a>
+      {% endif %}
+       said:</p>
+      <p class='comment-data'>{{ comment.content }}</p>
+    </li>
+{% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
