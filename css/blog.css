@@ -1,0 +1,66 @@
+body {
+  color: #111;
+  text-align: left;
+  margin: 0; padding: 0;
+
+  background-color: #F0F0F0;
+}
+
+.centered-column {
+  margin: 0 auto;
+  width: 960px;
+}
+
+#blog-header,
+#blog-footer {
+  border-width: 0;
+  border-style: solid;
+  border-color: #CCC;
+  
+  color: #242400;
+  width: 800px; 
+  margin: 0 auto;
+  padding: 16px 0 0 16px;
+
+  text-align: center;
+  text-shadow: 1px 1px #FFF;
+}
+
+#blog-header {
+  font: 18px/24px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-width: 0 0 1px;
+}
+
+#blog-footer {
+  border-width: 1px 0 0;
+  height: 60px;
+  padding: 5px;
+  clear: both;
+}
+#blog-footer p {
+  line-height: 20px;
+}
+
+/* layout styles */
+
+#content, #main { margin: 0; padding: 0; }
+#content {
+    clear: both;
+    width: 800px;
+    margin: 1em auto;
+    overflow: hidden;
+}
+#content .primary { width: 560px; float: left; }
+#content .secondary { width: 220px; float: right; }
+
+
+.secondary { background-color:#E7E7E7; }
+h2 {
+    font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
+    text-transform: uppercase;
+}
+.secondary h2 {
+    text-align: center;
+    background-color: #333;
+    color: #F7F7F7;
+}
