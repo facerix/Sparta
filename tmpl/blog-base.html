@@ -25,49 +25,42 @@
             <p>{% block subtitle %}{{ data.blog.description }}{% endblock %}</p>
         </div>
 
-        <div id="content">
-            <div id="main">
-                <div id="blog-content"> <!-- content -->
-                    {% block content%}
-                       <h1> Page title </h1>
-                       <p> H2O template inheritance is a powerful tool </p>
-                    {% endblock %}
+        <div id="main">
+            <div id="blog-content"> <!-- content -->
+                {% block content%}
 
-                    <div class="archiveNav">
-                        {% if data.older %}<a class="left"  href="{{ data.blog.url }}?offset={{ data.older }}">&lArr; Older Posts</a>{% endif %}
-                        {% if data.offset %}<a class="right" href="{{ data.blog.url }}?offset={{ data.newer }}">Newer Posts &rArr;</a>{% endif %}
-                        <a rel="me home" href="{{ data.blog.url }}">Home</a>
-                    </div>
+                   <h1> Page title </h1>
+                   <p> H2O template inheritance is a powerful tool </p>
+
+                {% endblock %}
+            </div>
+            <div id="sidebar"> <!-- right sidebar -->
+                {% block sidebar%}
+
+                {% if data.recent %}
+                    <h2>Recent Posts</h2>
+                    <ul id="recently">
+                    {% for index, post in data.recent %}
+                        <li><a href="{{ data.blog.url }}/post/{{ post.seoName }}">{{ post.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <h2>Tag Cloud</h2>
+                <div id='cloud_parent'>&nbsp;</div>
+
+                <h2>Rawr!</h2>
+                <div id="advocacy" style="text-align: center; padding-top: 15px;">
+                    <a href="https://developer.mozilla.org/en/JavaScript/Guide" title="JavaScript Tutorial"><img src="http://static.jsconf.us/promotejsh.gif" alt="JavaScript Tutorial" width="180" height="150"></a>
+                    <p><a href="http://promotejs.com">promotejs.com</a></p>
                 </div>
-                <div id="sidebar"> <!-- right sidebar -->
-                    {% block sidebar%}
 
-                        {% if data.recent %}
-                            <h2>Recent Posts</h2>
-                            <ul id="recently">
-                            {% for index, post in data.recent %}
-                                <li><a href="{{ data.blog.url }}/post/{{ post.seoName }}">{{ post.title }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        {% endif %}
-
-                        <h2>Tag Cloud</h2>
-                        <div id='cloud_parent'>&nbsp;</div>
-
-                        <h2>Rawr!</h2>
-                        <div id="advocacy" style="text-align: center; padding-top: 15px;">
-                            <a href="https://developer.mozilla.org/en/JavaScript/Guide" title="JavaScript Tutorial"><img src="http://static.jsconf.us/promotejsh.gif" alt="JavaScript Tutorial" width="180" height="150"></a>
-                            <p><a href="http://promotejs.com">promotejs.com</a></p>
-                        </div>
-
-                    {% endblock %}
-                </div>
+                {% endblock %}
             </div>
         </div>
 
         <div id="blog-footer">
-            <p>All media content and properties are &copy; their original holders. Unique content and source code &copy; 2012 Ryan Corradini.<br>
-            Comments? <a href="mailto:ryan@buyog.com">Email me.</a></p>
+            <p>This blog is powered by <a href="https://github.com/buyog/Sparta">Sparta</a>!</p>
         </div>
 
         <script src="js/require.js" data-main="js/blog.js"></script>

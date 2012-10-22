@@ -48,6 +48,12 @@
     {% endfor %}
     <!-- end looping over posts -->
 
+    <div class="archiveNav">
+        {% if data.older %}<a class="left"  href="{{ data.blog.url }}?offset={{ data.older }}">&lArr; Older Posts</a>{% endif %}
+        {% if data.offset %}<a class="right" href="{{ data.blog.url }}?offset={{ data.newer }}">Newer Posts &rArr;</a>{% endif %}
+        <a rel="me home" href="{{ data.blog.url }}">Home</a>
+    </div>
+
   {% else %}
 
     <div class="post" id="no_posts">
