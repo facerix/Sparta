@@ -8,10 +8,9 @@ include('model.php');
 db_connect();
 
 
-// TBD: check for SQL injection!!!
-$guid   = $_GET['id'];
-$page   = $_GET['page'];
-$post   = $_GET['post'];
+$guid   = mysql_real_escape_string($_GET['id']);
+$page   = mysql_real_escape_string($_GET['page']);
+$post   = mysql_real_escape_string($_GET['post']);
 
 if ($post != null) {
 
@@ -67,8 +66,8 @@ if ($post != null) {
 
 } else {
     # recent posts; comment summary is okay, and no need for comment details
-    $num    = $_GET['posts'];
-    $offset = $_GET['offset'];
+    $num    = mysql_real_escape_string($_GET['posts']);
+    $offset = mysql_real_escape_string($_GET['offset']);
     if ($num == '') { $num = 3; }
     if ($offset == '') { $offset = 0; }
 

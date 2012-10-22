@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="lt-ie9"><![endif]-->
+<!--[if gt IE 8]><html><!--<![endif]-->
+<!--[if !IE]><html><!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <title>{% block title %}{% endblock %}{% block blogname %}{{ data.blog.title }}{% endblock %}</title>
+
+        <link rel="icon" type="image/vnd.microsoft.icon" href="{{ data.blog.url }}/favicon.ico"/>
+        <link rel="stylesheet" href="{{ data.blog.url }}/css/blog.css" type="text/css" media="screen" />
+        <link rel="alternate" type="application/atom+xml" title="{{ data.blog.title }} - RSS Feed" href="{{ data.blog.url }}/feed" />
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <style type="text/css">
+            @import "http://buyog.com/css/grid.css";
+            @import "http://buyog.com/code/misc/tagCloud.css";
+        </style>
+    </head>
+    <body>
+        <div id="blog-header">
+            <h1>{% block heading %}{{ data.blog.title }}{% endblock %}</h1>
+            <p>{% block subtitle %}{{ data.blog.description }}{% endblock %}</p>
+        </div>
+
+        <div id="content">
+            <div id="main">
+                <div id="blog-content"> <!-- content -->
+                    {% block content%}
+                       <h1> Page title </h1>
+                       <p> H2O template inheritance is a powerful tool </p>
+                    {% endblock %}
+
+                    <div class="archiveNav">
+                        {% if data.older %}<a class="left"  href="{{ data.blog.url }}?offset={{ data.older }}">&lArr; Older Posts</a>{% endif %}
+                        {% if data.offset %}<a class="right" href="{{ data.blog.url }}?offset={{ data.newer }}">Newer Posts &rArr;</a>{% endif %}
+                        <a rel="me home" href="{{ data.blog.url }}">Home</a>
+                    </div>
+                </div>
+                <div id="sidebar"> <!-- right sidebar -->
+                    {% block sidebar%}
+
+                        <h2>Recent Posts</h2>
+                        <ul id="recently">
+                          <li><a href="<$BlogItemPermalinkURL$>"><$BlogPreviousItemTitle$></a></li>
+                        </ul>
+
+                        <h2>Tag Cloud</h2>
+                        <div id='cloud_parent'>&nbsp;</div>
+
+                        <h2>Rawr!</h2>
+                        <div id="advocacy" style="text-align: center; padding-top: 15px;">
+                            <a href="https://developer.mozilla.org/en/JavaScript/Guide" title="JavaScript Tutorial"><img src="http://static.jsconf.us/promotejsh.gif" alt="JavaScript Tutorial" width="180" height="150"></a>
+                            <p><a href="http://promotejs.com">promotejs.com</a></p>
+                        </div>
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <div id="blog-footer">
+            <p>All media content and properties are &copy; their original holders. Unique content and source code &copy; 2012 Ryan Corradini.<br>
+            Comments? <a href="mailto:ryan@buyog.com">Email me.</a></p>
+        </div>
+
+        <script src="js/require.js" data-main="js/blog.js"></script>
+        {% block script%}
+        {% endblock %}
+
+        <script type="text/javascript">
+          <!-- new Google Analytics script injection -->
+          /*
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-7547863-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script');
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+                'http://www') + '.google-analytics.com/ga.js';
+            ga.setAttribute('async', 'true');
+            document.documentElement.firstChild.appendChild(ga);
+          })();
+          */
+          <!-- end Google Analytics -->
+
+        </script>
+
+    </body>
+</html>

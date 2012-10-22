@@ -1,0 +1,60 @@
+{% extends 'blog-base.html' %}
+
+{% block content %}
+  {% if data.posts %}
+
+    <!-- start looping over posts -->
+    {% for index, post in data.posts %}
+
+      <!-- Begin .post -->
+      <div class="post" id="post_{{ post.guid }}">
+
+        <h3 class="post-title">
+         {% if post.seoName %}
+         <a href="{{ data.blog.url }}/post/{{ post.seoName }}" title="permanent link to this post">
+         {% else %}
+         <a href="{{ data.blog.url }}/?id={{ post.guid }}" title="permanent link to this post">
+         {% endif %}
+
+           {{ post.title }}
+         </a>
+        </h3>
+
+        <h2 class="date-header">{{ post.pubDate }}</h2>
+
+        <div class="post-body">
+            {{ post.body | safe }}
+        </div>
+
+        {% if post.tags %}
+        <div class="post-tags">
+            <strong>Tags:</strong>
+            {% for index,tag in post.tags %}
+                <a href="{{ data.blog.url }}/search?tag={{tag}}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% else %}
+            (<strong>no tags</strong>)
+        {% endif %}
+
+        <p class="post-footer">
+            <em>Posted by {{ post.author }} @ {{ post.pubTime }}</em> &nbsp;
+            <!--a class="comment-link" href="{{ data.blog.url }}/?id={{ post.guid }}#comments"><span style="text-transform:lowercase">{{ post.comments }} comments</span></a-->
+        </p>
+
+      </div>
+      <!-- End .post -->
+
+    {% endfor %}
+    <!-- end looping over posts -->
+
+  {% else %}
+
+    <div class="post" id="no_posts">
+
+        <h3 class='warning'>No posts found{% if data.tag %} matching current criteria{% endif %}.</h3>
+    </div>
+
+  {% endif %}
+
+{% endblock %}
