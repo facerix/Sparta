@@ -13,11 +13,6 @@
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-
-        <style type="text/css">
-            @import "http://buyog.com/css/grid.css";
-            @import "http://buyog.com/code/misc/tagCloud.css";
-        </style>
     </head>
     <body>
         <div id="blog-header">
@@ -61,28 +56,11 @@
             <p>This blog is powered by <a href="https://github.com/buyog/Sparta">Sparta</a>!</p>
         </div>
 
+        <script>
+            window.baseUrl = '{{data.blog.url}}';
+        </script>
         <script src="js/require.js" data-main="js/blog.js"></script>
         {% block script%}
         {% endblock %}
-
-        <script type="text/javascript">
-          <!-- new Google Analytics script injection -->
-          /*
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-7547863-1']);
-          _gaq.push(['_trackPageview']);
-
-          (function() {
-            var ga = document.createElement('script');
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
-                'http://www') + '.google-analytics.com/ga.js';
-            ga.setAttribute('async', 'true');
-            document.documentElement.firstChild.appendChild(ga);
-          })();
-          */
-          <!-- end Google Analytics -->
-
-        </script>
-
     </body>
 </html>
