@@ -12,8 +12,8 @@ require([
             var t, a, links = document.createDocumentFragment(), tagdata = JSON.parse(data);
             for (t in tagdata) {
                 a = document.createElement('a');
-                a.href = atto.supplant("{url}/search?tag={tag}", {url:window.baseUrl,tag:tagdata[t]});
-                a.text = tagdata[t];
+                a.href = atto.supplant("{url}/search?tag={tag}", {url:window.baseUrl,tag:t});
+                a.appendChild( document.createTextNode(t) );
                 links.appendChild( a );
                 links.appendChild( document.createTextNode(' ') );
             }
