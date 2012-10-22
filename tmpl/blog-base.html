@@ -42,10 +42,14 @@
                 <div id="sidebar"> <!-- right sidebar -->
                     {% block sidebar%}
 
-                        <h2>Recent Posts</h2>
-                        <ul id="recently">
-                          <li><a href="<$BlogItemPermalinkURL$>"><$BlogPreviousItemTitle$></a></li>
-                        </ul>
+                        {% if data.recent %}
+                            <h2>Recent Posts</h2>
+                            <ul id="recently">
+                            {% for index, post in data.recent %}
+                                <li><a href="{{ data.blog.url }}/post/{{ post.seoName }}">{{ post.title }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
 
                         <h2>Tag Cloud</h2>
                         <div id='cloud_parent'>&nbsp;</div>

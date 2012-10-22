@@ -4,6 +4,30 @@ include('_globals.php');
 
 # DB access to be used throughout the code
 
+function getRecentPostSummaries($num) {
+    $query = "SELECT guid,title,pubDate,seoName " .
+             "FROM posts " .
+             "WHERE draft=0 " .
+             "ORDER BY pubDate DESC LIMIT $num";
+
+    # get result
+    $result = mysql_query($query) or die("Unable to retrieve recent post summaries");
+
+    $posts = array();
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+        # reformat date
+        $dateStamp = strtotime( $row['pubDate'] );
+        $row['isoDate'] = strftime( "%Y-%m-%dT%H:%M:%IZ", $dateStamp );
+        $row['rssDate'] = strftime( "%a, %d %h %Y %H:%M:%I %z", $dateStamp );
+        $row['pubDate'] = strftime( "%A, %B %e, %Y", $dateStamp );
+        $row['pubTime'] = strftime( "%l:%M %P", $dateStamp );
+
+        array_push($posts, $row);
+    }
+
+    return $posts;
+}
+
 function getRecentPosts($num, $offset=0) {
     $query = "SELECT posts.*, count(comments.post_guid) AS comments, group_concat(tags.tag) as taglist " .
              "FROM posts LEFT OUTER JOIN comments ON posts.guid=comments.post_guid " .
