@@ -1,0 +1,13 @@
+{% extends 'blog-base.html' %}
+
+{% block title %}Resource not found | {% endblock %}
+
+
+{% block content %}
+
+<h2>Sorry, I can't find that page.</h2>
+<p>Our team of trained server monkeys have been released to investigate the issue.</p>
+<p>Meanwhile, you can <a ref="me" href="javascript:history.go(-1)">go back</a> to your previous URL, or
+   <a rel="me home" href="{{ data.blog.url }}">go to the front page</a>.</p>
+
+{% endblock %}
