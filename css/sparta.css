@@ -238,6 +238,12 @@ input[type='text'], .status {
     width: 45px;
 }
 
+#xhrResponse {
+    margin-left:1em; 
+    padding-left: 1em; 
+    border-left: 1px solid #999;
+}
+
 
 /* fallbacks for missing font-face support */
 .lt-ie9 .icon-lines:before     { content: "\2261"; }

@@ -47,8 +47,8 @@ require(
                 success: function(data) {
                     document.getElementById("xhrResponse").innerHTML = data; //"Saved at " + new Date();
                 },
-                failure: function(error) {
-                    document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                failure: function(err) {
+                    document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + err + ")";
                 }
             });
         }

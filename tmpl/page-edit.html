@@ -42,10 +42,11 @@ require(
                 url: theForm.action,
                 postData: atto.serializeForm(theForm),
                 success: function(data) {
-                    if (data.status == 'SUCCESS') {
+                    var response = JSON.parse(data) || eval(data);
+                    if (response.status == 'SUCCESS') {
                         document.getElementById("xhrResponse").innerHTML = "Saved at " + new Date();
                     } else {
-                        document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                        document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + response.message + ")";
                     }
                 },
                 failure: function(error) {
