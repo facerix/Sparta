@@ -9,7 +9,7 @@
       <!-- Begin .post -->
       <div class="post" id="post_{{ post.guid }}">
 
-        <h3 class="post-title">
+        <h2 class="post-title">
          {% if post.seoName %}
          <a href="{{ data.blog.url }}/post/{{ post.seoName }}" title="permanent link to this post">
          {% else %}
@@ -18,9 +18,9 @@
 
            {{ post.title }}
          </a>
-        </h3>
+        </h2>
 
-        <h2 class="date-header">{{ post.pubDate }}</h2>
+        <h3 class="date-header">{{ post.pubDate }}</h3>
 
         <div class="post-body">
             {{ post.body | safe }}

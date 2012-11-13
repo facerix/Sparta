@@ -66,3 +66,7 @@ h2 {
 }
 
 #cloud_parent { text-align: center; }
+
+.post-tags a { text-decoration: none; }
+.post-tags a:after { content: ", "; }
+.post-tags a:last-of-type:after { content: ""; }

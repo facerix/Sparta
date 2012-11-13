@@ -7,13 +7,13 @@
   <!-- Begin .post -->
   <div class="post" id="post_{{ data.post.guid }}"></a>
 
-    <h3 class="post-title">
+    <h2 class="post-title">
      <a href="{{ data.blog.url }}/?id={{ data.post.guid }}" title="permanent link to this post">
        {{ data.post.title }}
      </a>
-    </h3>
+    </h2>
 
-    <h2 class="date-header">{{ data.post.pubDate }}</h2>
+    <h3 class="date-header">{{ data.post.pubDate }}</h3>
 
     <div class="post-body">
         {{ data.post.body | safe }}
