@@ -1,10 +1,9 @@
 require([
-    "sparta-core"
+    "atto-core"
 ], function(atto) {
-
-    // TODO: bootstrap the tag cloud
+    // bootstrap the tag cloud
     atto.xhrRequest({
-        url: "tags",
+        url: window.baseUrl + "/tags",
         handleAs: "json",
         preventCache: true,
         success: function(data) {

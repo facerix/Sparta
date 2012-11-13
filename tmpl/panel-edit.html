@@ -4,91 +4,81 @@
 
 {% block code %}
 require(
-    ["atto/core"],
+    ["js/atto-core"],
     function(atto) {
     "use strict";
 
-        var txt = document.querySelector('textarea');
+        var txt = document.querySelector('textarea'),
+            footer = document.querySelector('footer'),
+            btnUnmax = document.querySelector('#btn_unmax');
+
         function reflow() {
-            txt.style.height = window.innerHeight - 176 + 'px';
+            if (txt.className == 'focused') {
+                txt.style.height = windowInnerHeight() + 'px';
+            } else {
+                txt.style.height = windowInnerHeight() - 231 + 'px';
+            }
+        }
+        function max_text() {
+            txt.className = 'focused';
+            btnUnmax.style.display = '';
+            footer.style.display = 'none';
+            reflow();
+        }
+        function unmax_text() {
+            txt.className = '';
+            btnUnmax.style.display = 'none';
+            footer.style.display = '';
+            reflow();
         }
         atto.addEvent(window, 'resize', reflow);
         atto.addEvent(window, 'load', reflow);
+        atto.addEvent(txt, 'focus', max_text);
+        atto.addEvent(txt, 'blur', unmax_text);
 
         function publish() {
-            var draft = document.getElementById('blnDraft').value;
-            var action = draft ? 'Published' : 'Saved';
+            var draft = document.getElementById('blnDraft').value,
+                theForm = document.getElementById('frmEdit'),
+                action = draft ? 'Published' : 'Saved';
 
             atto.xhrRequest({
-                form: dojo.byId("frmEdit"),
-                handleAs: "text",
-                load: function(data) {
-                    dojo.byId("xhrResponse").innerHTML = action + " at " + new Date();
+                url: theForm.action,
+                postData: atto.serializeForm(theForm),
+                success: function(data) {
+                    document.getElementById("xhrResponse").innerHTML = data; //"Saved at " + new Date();
                 },
-                error: function(error) {
-                    dojo.byId("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                failure: function(error) {
+                    document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
                 }
             });
         }
-
         atto.addEvent(document.querySelector('.submit'), 'click', publish);
 
     } // end of require callback
 );
-
-
-
-
 {% endblock %}
 
 {% block main %}
 <style>
-    input[type='text'], .status {
-        display: block;
-        padding: 2px 4px; margin:0;
-        width:100%;
-    }
-    #frmEdit textarea {
-        position: absolute;
-        left: 0; right: 0;
-        width: 100%;
-        top: 96px;
-        bottom: 76px;
-    }
-    #frmEdit footer {
-        position: absolute;
-        left: 0; right: 0; bottom: 0;
-        height: 76px;
-    }
-
-    #frmEdit .status span {
-        display: inline-block;
-        left: 0; right: 24px;
-    }
-    #frmEdit .submit {
-        color: #CC6;
-        position: absolute;
-        right: 5px;
-        width: 45px;
-    }
-
+  #frmEdit footer { height: 6em; }
 </style>
+
     <form id="frmEdit" action="savePost.php" method="POST">
-        <input type="text" name="title" value="{{ data.post.title }}" placeholder="Post Title"> </input>
-        <input type="text" name="seoName" value="{{ data.post.seoName }}" placeholder="SEO-name (i.e. URL-friendly name)"> </input>
+        <input type="text" name="title" value="{{ data.post.title }}" placeholder="Post Title" />
+        <input type="text" name="seoName" value="{{ data.post.seoName }}" placeholder="SEO-name (i.e. URL-friendly name)" />
         <textarea name="content" class='clearfix' rows="16" placeholder="Post Body Goes Here">{{ data.post.body }}</textarea>
+        <a href="#" id="btn_unmax" onclick="unmax_text" class="icon-reply" style="display:none;"> </a>
 
         <footer>
-            <input type="text" name="tags" value="{{ data.tags }}" placeholder="Tags"> </input>
+            <input type="text" name="tags" value="{{ data.tags }}" placeholder="Tags" />
             <div class="status">
                 <input type="checkbox" id="blnDraft" name="draft" {% if data.post.draft %}checked="checked"{% endif %} />
-                <label for="draft">Draft</label>
+                <label for="blnDraft">Draft</label>
                 <span id="xhrResponse"> </span>
                 <a href="#" class="icon-lightning submit"> </a>
             </div>
         </footer>
 
-        <input type="hidden" name="secret" value="booya"/>
         <input type="hidden" id="guid"     name="guid"    value="{{ data.post.guid }}"  />
         <input type="hidden" id="pubDate"  name="pubDate" value="{{ data.currDate }}"   />
     </form>

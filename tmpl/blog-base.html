@@ -59,7 +59,7 @@
         <script>
             window.baseUrl = '{{data.blog.url}}';
         </script>
-        <script src="js/require.js" data-main="js/blog.js"></script>
+        <script src="{{data.blog.url}}/js/require.js" data-main="{{data.blog.url}}/js/blog.js"></script>
         {% block script%}
         {% endblock %}
     </body>

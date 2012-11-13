@@ -90,6 +90,7 @@ nav a {
 .link_glyph {
     font-size: 6em;
     line-height: 180px;
+    width: auto;
 }
 .link_label {
     font-family: 'OstrichSansBlack', Arial, sans-serif;
@@ -162,7 +163,6 @@ ol { list-style: none; margin: 0; padding: 0; }
 }
 
 .item .tags {
-    visibility: hidden;
     color: #aaa;
     position: absolute;
     max-width: 60%;
@@ -176,8 +176,11 @@ ol { list-style: none; margin: 0; padding: 0; }
     left: 1em; bottom: 0.2em;
 }
 
+.item.draft span { z-index: 999; }
 .item.draft:before {
     content: "/ / / DRAFT / / / DRAFT / / / DRAFT / / / DRAFT ";
+    z-index: 0;
+    color: #F0F0F0;
     color: rgba(102, 102, 102,0.1);
     font: 48px/50px 'OstrichSansBlack', Arial, sans-serif;
     font-style: italic;
@@ -194,6 +197,8 @@ input[type='text'], .status {
     display: block;
     padding: 2px 4px; margin:0;
     width:100%;
+    height: 3em;
+    line-height: 3em;
 }
 #btn_unmax {
     position: absolute;
@@ -208,7 +213,7 @@ input[type='text'], .status {
     position: absolute;
     left: 0; right: 0;
     width: 100%;
-    top: 96px;
+    top: 10em;
     bottom: 76px;
 }
 #frmEdit textarea.focused {
@@ -234,10 +239,21 @@ input[type='text'], .status {
 }
 
 
+/* fallbacks for missing font-face support */
+.lt-ie9 .icon-lines:before     { content: "\2261"; }
+.lt-ie9 .icon-reply:before     { content: "\2297"; }
+.lt-ie9 .icon-lightning:before { content: "\A7";   }
+.lt-ie9 .icon-pencil:before    { content: "\2660"; }
+.lt-ie9 .icon-paper:before     { content: "\2663";   }
+.lt-ie9 .icon-newspaper:before { content: "\2665"; }
+.lt-ie9 .icon-copy:before      { content: "\2666"; }
+
 
 /* media queries for mobile support */
 @media screen and (max-width: 320px) {
     nav a { width: 120px; height: 120px; }
+
+    .item .tags { visibility: hidden; }
 
     .link_glyph { font-size: 3em; line-height: 80px; }
     .link_label { font-size: 1em; }

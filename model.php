@@ -305,7 +305,7 @@ function getPageDetails($name) {
     return $pagedata;
 }
 
-function savePage($name, $dateStr, $content, $draft, $standalone) {
+function savePage($name, $dateStr, $content, $standalone) {
 
     # get blog constants
     global $blog;
@@ -322,16 +322,18 @@ function savePage($name, $dateStr, $content, $draft, $standalone) {
         if ($existing_name) {
             // update existing page
             $update = "UPDATE pages SET pubDate='$dateStr', ".
-                      "author='$me', body='$content', draft=$draft, standalone=$standalone " .
+                      "author='$me', body='$content', standalone=$standalone " .
                       "WHERE name='$name'";
             mysql_query($update) or die( "Failed to save page. <br/>Error details: " . mysql_error() );
 
         } else {
             // save new page
-            $insert = "INSERT INTO pages (name, pubDate, author, body, draft, standalone)" .
-                      " VALUES ('$name', '$dateStr', '$me', '$content', $draft, $standalone)";
+            $insert = "INSERT INTO pages (name, pubDate, author, body, standalone)" .
+                      " VALUES ('$name', '$dateStr', '$me', '$content', $standalone)";
             mysql_query($insert) or die( "Failed to save page. <br/>Error details: " . mysql_error() );
         }
+    } else {
+        return "No name provided";
     }
     return 0;
 }

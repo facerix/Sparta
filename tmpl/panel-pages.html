@@ -3,14 +3,23 @@
 {% block pagetitle %}Manage pages{% endblock %}
 
 {% block code %}
-var n, items = document.querySelectorAll('.item[data-href]');
-for (n=0; n < items.length; n++) {
-    items[n] && atto.on(items[n], 'click', function() { location.href = this.getAttribute('data-href'); });
-}
+require(
+    ["js/atto-core"],
+    function(atto) {
+    "use strict";
+        var n, callback, items = document.querySelectorAll('.item[data-href]');
+        for (n=0; n < items.length; n++) {
+            if (items[n]) {
+                callback = (function(url) { return function() { location.href = url; } })(items[n].getAttribute('data-href'));
+                atto.addEvent(items[n], 'click', callback);
+            }
+        }
+    } // end of require callback
+);
 {% endblock %}
 
 {% block main %}
-    <h1>Pages</h1>
+    <h1>Pages <a href="edit_page" style="float:right">(New)</a></h1>
     <ol>
     {% for index,page in data.pages %}
     <div class="item {%if page.draft %}draft{% endif %}" data-href="{{ data.blog.url }}/edit_page.php?name={{ page.name | escape true }}">

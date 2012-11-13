@@ -8,6 +8,11 @@ include('model.php');
 db_connect(1);
 
 
+// make sure we're logged in
+include_once("Alibaba.class.php");
+Alibaba::forceAuthentication();
+
+
 // grab and sanitize posted params
 /* ============================================================================ 
 NOTE: this is WAY too simple, and likely still leaves us exposed to some varieties of malicious attack.
@@ -23,35 +28,29 @@ $content  = mysql_real_escape_string($_POST["content"]);
 $tags     = mysql_real_escape_string($_POST["tags"]);
 $pubDate  = strtotime( $_POST["pubDate"] );
 
-# init template engine
-$h2o = new h2o('tmpl/panel-action.html');
-
 if (!$pubDate) {
     $dateStr = date('Y-m-d H:i:s');
 } else {
     $dateStr = date('Y-m-d H:i:s', $pubDate);
 }
-
-$err = savePost($guid, $title, $dateStr, $content, $draft, $tags, $seoName);
-if (!$err) {
-    $data = array(
-        'blog' => $blog,
-        'title' => 'Published post',
-        'message' => 'Your post has been published/saved.',
-        'body' => "<a href='?p=$seoName'>View post</a> | <a href='posts'>Back to control panel</a>"
-    );
+  
+if ($draft == 'on') {
+    $draft = 1;
+    $status = 'Saved';
 } else {
-    $data = array(
-        'blog' => $blog,
-        'title' => 'Publishing failed!',
-        'message' => 'Failed to save your post.',
-        'body' => "Error details: $err"
-    );
+    $draft = 0;
+    $status = 'Published';
 }
 
-# done!
+$err = savePost($guid, $title, $dateStr, $content, $draft, $tags, $seoName);
 db_close();
 
-# render the page
-echo $h2o->render(compact('data'));
+if (!$err) {
+    $response = '$status your post at ' + date('Y-m-d H:i:s');
+} else {
+    $response = 'Failed to save your post. Error details: $err';
+}
+
+echo $response;
+
 ?>

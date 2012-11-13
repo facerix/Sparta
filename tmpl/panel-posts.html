@@ -3,23 +3,35 @@
 {% block pagetitle %}Manage posts{% endblock %}
 
 {% block code %}
-var n, items = document.querySelectorAll('.item[data-href]');
-for (n=0; n < items.length; n++) {
-    items[n] && on(items[n], 'click', function(event) { 
-        if (this === window) {
-            // I hate you, IE.
-            var target = event ? event.target : window.event.srcElement; 
-            console.log(target);
-        } else {
-            console.log(typeof this);
-            window.location.href = this.getAttribute('data-href');
+require(
+    ["js/atto-core"],
+    function(atto) {
+    "use strict";
+
+        var n, evt, target, items = document.querySelectorAll('.item[data-href]');
+        for (n=0; n < items.length; n++) {
+            items[n] && atto.addEvent(items[n], 'click', function(event) {
+                if (this === window) {
+                    // I hate you, IE.
+                    evt = event || window.event;
+                    target = evt.target || evt.srcElement;
+                    if (target) {
+                        window.location.href = target.attributes('data-href').value; //target.getAttribute('data-href');
+                    } else {
+                        console.log(target);
+                    }
+                } else {
+                    window.location.href = this.getAttribute('data-href');
+                }
+            });
         }
-    });
-}
+
+    } // end of require callback
+);
 {% endblock %}
 
 {% block main %}
-    <h1>Posts</h1>
+    <h1>Posts <a href="edit" style="float:right">(New)</a></h1>
     <ol>
     {% for index,post in data.posts %}
     <div class="item {%if post.draft %}draft{% endif %}" data-href="{{ data.blog.url }}/edit.php?id={{ post.guid }}">

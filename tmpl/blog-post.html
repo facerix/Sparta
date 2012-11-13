@@ -22,7 +22,7 @@
     <div class="post-tags">
         <strong>Tags:</strong>
         {% for index,tag in data.tags %}
-            <a href="{{ data.blog.url }}/search.php?tag={{tag}}">{{ tag }}</a>{% if index < data.tags.length-1 %},{% endif %}
+            <a href="{{ data.blog.url }}/search?tag={{tag}}">{{ tag }}</a>{% if index < data.tags.length-1 %},{% endif %}
         {% endfor %}
     </div>
 

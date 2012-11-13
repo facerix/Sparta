@@ -3,58 +3,68 @@
 {% block pagetitle %}{{ data.title }}{% endblock %}
 
 {% block code %}
-"use strict";
+require(
+    ["js/atto-core"],
+    function(atto) {
+    "use strict";
 
-var txt = document.querySelector('textarea'),
-    footer = document.querySelector('footer'),
-    btnUnmax = document.querySelector('#btn_unmax');
-function reflow() {
-    if (txt.className == 'focused') {
-        txt.style.height = window.innerHeight + 'px';
-    } else {
-        txt.style.height = window.innerHeight - 124 + 'px';
-    }
-}
-function max_text() {
-    txt.className = 'focused';
-    btnUnmax.style.display = '';
-    footer.style.display = 'none';
-    reflow();
-}
-function unmax_text() {
-    txt.className = '';
-    btnUnmax.style.display = 'none';
-    footer.style.display = '';
-    reflow();
-}
-atto.on(window, 'resize', reflow);
-atto.on(window, 'load', reflow);
-atto.on(txt, 'focus', max_text);
-atto.on(txt, 'blur', unmax_text);
-
-function publish() {
-    var theForm = document.getElementById('frmEdit');
-
-    atto.xhrRequest({
-        url: theForm.action,
-        postData: atto.formToObject(theForm),
-        success: function(data) {
-            document.getElementById("xhrResponse").innerHTML = "Saved at " + new Date();
-        },
-        failure: function(error) {
-            document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+        var txt = document.querySelector('textarea'),
+            footer = document.querySelector('footer'),
+            btnUnmax = document.querySelector('#btn_unmax');
+        function reflow() {
+            if (txt.className == 'focused') {
+                txt.style.height = windowInnerHeight() + 'px';
+            } else {
+                txt.style.height = windowInnerHeight() - 144 + 'px';
+            }
         }
-    });
-}
-atto.on(document.querySelector('.submit'), 'click', publish);
+        function max_text() {
+            txt.className = 'focused';
+            btnUnmax.style.display = '';
+            footer.style.display = 'none';
+            reflow();
+        }
+        function unmax_text() {
+            txt.className = '';
+            btnUnmax.style.display = 'none';
+            footer.style.display = '';
+            reflow();
+        }
+        atto.addEvent(window, 'resize', reflow);
+        atto.addEvent(window, 'load', reflow);
+        atto.addEvent(txt, 'focus', max_text);
+        atto.addEvent(txt, 'blur', unmax_text);
+
+        function publish() {
+            var theForm = document.getElementById('frmEdit');
+
+            atto.xhrRequest({
+                url: theForm.action,
+                postData: atto.serializeForm(theForm),
+                success: function(data) {
+                    if (data.status == 'SUCCESS') {
+                        document.getElementById("xhrResponse").innerHTML = "Saved at " + new Date();
+                    } else {
+                        document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                    }
+                },
+                failure: function(error) {
+                    document.getElementById("xhrResponse").innerHTML = "Couldn't save (" + error + ")";
+                }
+            });
+        }
+        atto.addEvent(document.querySelector('.submit'), 'click', publish);
+
+    } // end of require callback
+);
 {% endblock %}
 
 {% block main %}
 <style>
-  #frmEdit textarea { top: 74px; }
+  #frmEdit textarea { top: 7em; }
 </style>
     <form id="frmEdit" action="savePage.php" method="POST">
-        <input type="text" name="title" value="{{ data.page.name }}" placeholder="Page Name"> </input>
+        <input type="text" name="name" value="{{ data.page.name }}" placeholder="Page Name"> </input>
         <textarea name="content" rows="20" placeholder="Page Content Goes Here">{{ data.page.body }}</textarea>
       <a id="btn_unmax" onclick="unmax_text" class="icon-reply" style="display:none;"> </a>
 

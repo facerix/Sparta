@@ -2,13 +2,8 @@
 // Atto Core : helper functions and such (AMD)
 //
 // author: Ryan Corradini
-// version: 2.0
-// date: 12 June 2012
+// date: 31 Oct 2012
 // license: MIT
-//
-//
-// This is basically a stripped-down version of Atto;
-//   it only includes those functions needed to keep this project dependency-free.
 //
 
 
@@ -25,16 +20,32 @@ define(
                 url: '',
                 postData: '',
                 success: null,
-                failure: null
+                failure: null,
+                accept: null,
+                form: null
             }, args);
 
             var req = _createXMLHTTPObject();
             if (!req) return;
-            if (opts.postData) {
+            if (opts.postData || opts.form) {
                 req.open('POST', opts.url, true);
                 req.setRequestHeader('Content-type','application/x-www-form-urlencoded');
             } else {
                 req.open('GET', opts.url, true);
+            }
+            if (opts.accept) {
+                var acceptMIMEType = null;
+                switch (opts.accept) {
+                    case 'html':
+                        acceptMIMEType = 'text/html';
+                        break;
+                    case 'json':
+                        acceptMIMEType = 'application/json';
+                        break;
+                    default:
+                        break;
+                }
+                if (acceptMIMEType) req.setRequestHeader('Accept', acceptMIMEType);
             }
             req.onreadystatechange = function () {
                 if (req.readyState != 4) return;
@@ -52,6 +63,10 @@ define(
                 }
             }
             if (req.readyState == 4) return;
+            if (opts.form) {
+                if (typeof opts.form == 'string') opts.form = document.getElementById(opts.form);
+                opts.postData = _serializeForm(opts.form);
+            }
             req.send(opts.postData);
         }
 
@@ -74,6 +89,11 @@ define(
                 break;
             }
             return xmlhttp;
+        }
+
+        function _serializeForm(theForm) {
+            var args = _getNamedElements( theForm );
+            return args.join('&');
         }
 
         function _isArray(it) {
@@ -110,6 +130,20 @@ define(
             }
             return old_args;
         }  // --> this is the one that gets exposed
+
+        function _getNamedElements(container) {
+            var i, args = [], formElements = container.childNodes;
+
+            for (i=0; i<formElements.length; i++) {
+                if (formElements[i].name) {
+                    args.push( formElements[i].name + "=" + encodeURIComponent(formElements[i].value) );
+                }
+                if (formElements[i].childNodes) {
+                    args = args.concat(_getNamedElements(formElements[i]));
+                }
+            }
+            return args;
+        }
 
         function _stopEventCascade(e) {
             if (!e) var e = window.event || {};
@@ -176,6 +210,11 @@ define(
             return document.getElementById(id);
         }
 
+        function _serializeForm(theForm) {
+            var args = _getNamedElements( theForm );
+            return args.join('&');
+        }
+
         function _supplant(str, args) {
         /*
           adapted from Douglas Crockford's Remedial JavaScript
@@ -226,6 +265,7 @@ define(
             xhrRequest       : _xhr,
             mixinArgs        : _args_mixin,
             supplant         : _supplant,
+            serializeForm    : _serializeForm,
             head             : _head,
             getKeys          : _getKeys
         }

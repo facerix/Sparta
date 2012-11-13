@@ -24,8 +24,11 @@
         {% block main %}
         {% endblock %}
 
-        <script type="text/javascript" src="{{ data.blog.url }}/js/sparta-core.js"></script>
+        <script type="text/javascript" src="js/require.js"></script>
         <script>
+            windowInnerHeight = function() {
+                return (window.innerHeight) ? window.innerHeight : Math.max(document.documentElement.clientHeight, document.body.clientHeight);
+            }
             {% block code %}
             {% endblock %}
         </script>

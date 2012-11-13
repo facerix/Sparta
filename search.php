@@ -7,7 +7,6 @@ include('model.php');
 // connect to the DB in readonly mode
 db_connect();
 
-
 $tag    = mysql_real_escape_string($_GET['tag']);
 $num    = mysql_real_escape_string($_GET['num']);
 $offset = mysql_real_escape_string($_GET['offset']);
