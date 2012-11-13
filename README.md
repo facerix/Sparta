@@ -16,4 +16,13 @@ Currently, I'm in the middle of a restyling / refactoring of the management pane
 INSTALLATION
 ------------
 
-TBD
+1. Get the [H2O](https://github.com/speedmax/h2o-php) template engine and drop it in a `bin/h2o` subfolder.
+2. Create a new MySQL database on your server, and run the `sql/create_tables.sql` script to build its schema.
+3. Copy `alibaba_config_sample.php` to `alibaba_config.php`, and edit it to reflect the database you just created.
+4. Copy `sparta_config_sample.php` to `sparta_config.php`, and edit it to reflect the same database, as well as your desired blog information.
+
+
+CREDITS
+------------
+I'm using [Ben Crowder's](http://bencrowder.net/) public domain 
+[Alibaba](https://github.com/bencrowder/alibaba) project for its minimal PHP authentication.
