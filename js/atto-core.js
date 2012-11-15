@@ -131,12 +131,27 @@ define(
             return old_args;
         }  // --> this is the one that gets exposed
 
+        function _serializeFormElement(el) {
+            var retval = '';
+            if (el) {
+                switch (el.type) {
+                    case 'checkbox':
+                        retval = el.name + "=" + (el.checked ? 1: 0);
+                        break;
+                    default:
+                        retval = el.name + "=" + encodeURIComponent(el.value);
+                        break;
+                }
+            }
+            return retval;
+        }
+
         function _getNamedElements(container) {
             var i, args = [], formElements = container.childNodes;
 
             for (i=0; i<formElements.length; i++) {
                 if (formElements[i].name) {
-                    args.push( formElements[i].name + "=" + encodeURIComponent(formElements[i].value) );
+                    args.push( _serializeFormElement(formElements[i]) );
                 }
                 if (formElements[i].childNodes) {
                     args = args.concat(_getNamedElements(formElements[i]));

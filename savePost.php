@@ -33,12 +33,9 @@ if (!$pubDate) {
 } else {
     $dateStr = date('Y-m-d H:i:s', $pubDate);
 }
-  
-if ($draft == 'on') {
-    $draft = 1;
-    $status = 'Saved';
-} else {
-    $draft = 0;
+
+$status = 'Saved';
+if ($draft == 0) {
     $status = 'Published';
 }
 
@@ -46,7 +43,7 @@ $err = savePost($guid, $title, $dateStr, $content, $draft, $tags, $seoName);
 db_close();
 
 if (!$err) {
-    $response = '$status your post at ' + date('Y-m-d H:i:s');
+    $response = $status . ' your post at ' . date('Y-m-d H:i:s');
 } else {
     $response = 'Failed to save your post. Error details: $err';
 }
