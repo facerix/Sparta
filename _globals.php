@@ -1,6 +1,7 @@
 <?php
 
 include_once("sparta_config.php");
+define('DEBUG', false);  // change to true for development
 
 # global functions
 
@@ -31,12 +32,22 @@ function mysql_fetch_all($result) {
     return $all;
 }
 
-function try_sql_execute($sql) {
-    $result = mysql_query($sql);
-    if(!$result)
-    {
-        return "Query error ($sql): " . mysql_error();
-    } 
+function safe_die($msg, $sql='') {
+// idea for this helper function from here: http://board.phpbuilder.com/showthread.php?10340977-mysql_query()-or-die()
+   $details = $msg;
+   if(!empty($sql)) {
+      $details .= " ($sql)"; 
+   }
+   $mysql = @mysql_error();
+   if(!empty($mysql)) { 
+      $details .= ": $mysql";
+   }
+   if(DEBUG) { 
+      die($details);
+   } else {
+      error_log($details);
+      die($msg);
+   }
 }
 
 function show404() {

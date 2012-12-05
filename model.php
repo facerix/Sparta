@@ -190,17 +190,11 @@ function savePost($guid, $title, $dateStr, $content, $draft, $tags, $seoName) {
         $update = "UPDATE posts SET title='$title', pubDate='$dateStr', ".
                   "author='$me', body='$content', draft=$draft, seoName='$seoName' " .
                   "WHERE guid=$guid";
-        $err = try_sql_execute($update);
-        if ($err) {
-            return ( "Failed to save post. <br/>Error details: " . $err );
-        }
+        $results = mysql_query($update) or safe_die("Failed to save post.", $update);
     
         // save tags (removing any existing ones first)
         $delTags = "DELETE FROM tags WHERE post_guid=$guid";
-        $err = try_sql_execute($delTags);
-        if ($err) {
-            return ( "Failed to save post. <br/>Error details: " . $err );
-        }
+        $results = mysql_query($delTags) or safe_die("Failed to save post.", $delTags);
 
         $tagArray = explode(",", $tags);
         foreach ($tagArray as &$tag) {
@@ -213,18 +207,12 @@ function savePost($guid, $title, $dateStr, $content, $draft, $tags, $seoName) {
         // save new post
         $insert = "INSERT INTO posts (title, pubDate, author, body, draft, seoName)" .
                   " VALUES ('$title', '$dateStr', '$me', '$content', $draft, '$seoName')";
-        $err = try_sql_execute($insert);
-        if ($err) {
-            return ( "Failed to save post. <br/>Error details: " . $err );
-        }
+        $results = mysql_query($insert) or safe_die("Failed to save post.", $insert);
 
         // get guid
-        $select = "SELECT guid FROM posts WHERE title='$title' ORDER BY guid DESC";
+        $select = "SELECT guid FROM posts WHERE seoName='$seoName' ORDER BY guid DESC";
         $errMsg = "Can't get post ID; your post has been saved, but its tags were not.<br/>Error details: ";
-        $err = try_sql_execute($select);
-        if ($err) {
-            return ( $errMsg . $err );
-        }
+        $results = mysql_query($select) or safe_die($errMsg, $select);
         $row = mysql_fetch_row($result);
         $guid = $row[0];
 
