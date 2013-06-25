@@ -67,6 +67,11 @@ h2 {
 
 #cloud_parent { text-align: center; }
 
+.post {
+    border-bottom: 1px dotted #000;
+    margin-bottom: 1em;
+}
+
 .post-tags a { text-decoration: none; }
 .post-tags a:after { content: ", "; }
 .post-tags a:last-of-type:after { content: ""; }

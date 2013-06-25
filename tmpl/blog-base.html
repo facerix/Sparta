@@ -16,7 +16,9 @@
     </head>
     <body>
         <div id="blog-header">
-            <h1>{% block heading %}{{ data.blog.title }}{% endblock %}</h1>
+            <a href="{{ data.blog.url }}">
+                <h1>{% block heading %}{{ data.blog.title }}{% endblock %}</h1>
+            </a>
             <p>{% block subtitle %}{{ data.blog.description }}{% endblock %}</p>
         </div>
 
