@@ -31,6 +31,11 @@ body {
   border-width: 0 0 1px;
 }
 
+#blog-header a {
+    color: inherit;
+    text-decoration: none;
+}
+
 #blog-footer {
   border-width: 1px 0 0;
   height: 60px;
